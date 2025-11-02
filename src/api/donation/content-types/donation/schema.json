@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donations",
+  "info": {
+    "singularName": "donation",
+    "pluralName": "donations",
+    "displayName": "donation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "quantity": {
+      "type": "string",
+      "required": true
+    },
+    "expiration_date": {
+      "type": "date"
+    },
+    "status_donation": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Pendente",
+      "enum": [
+        "Pendente",
+        "Enviada",
+        "Entregue"
+      ]
+    },
+    "donations": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "donors"
+    },
+    "ong": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ong.ong",
+      "inversedBy": "donations"
+    }
+  }
+}

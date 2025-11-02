@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ongs",
+  "info": {
+    "singularName": "ong",
+    "pluralName": "ongs",
+    "displayName": "ong"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "cnpj": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "address": {
+      "type": "text"
+    },
+    "contact_info": {
+      "type": "text"
+    },
+    "donations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::donation.donation",
+      "mappedBy": "ong"
+    }
+  }
+}
