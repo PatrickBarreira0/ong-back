@@ -441,10 +441,12 @@ export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Alimentos: Schema.Attribute.Enumeration<['Arroz', 'Macarrao', 'Default']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Default'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
     donations: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'

@@ -11,9 +11,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "description": {
-      "type": "text",
-      "required": true
+    "Alimentos": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Default",
+      "enum": [
+        "Arroz",
+        "Macarrao",
+        "Default"
+      ]
     },
     "quantity": {
       "type": "string",
