@@ -66,11 +66,16 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "donors": {
+    "documento": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "donations": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::donation.donation",
-      "mappedBy": "donations"
+      "mappedBy": "user"
     }
   }
 }

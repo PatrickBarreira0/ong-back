@@ -441,16 +441,14 @@ export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Alimentos: Schema.Attribute.Enumeration<['Arroz', 'Macarrao', 'Default']> &
+    Alimentos: Schema.Attribute.Enumeration<
+      ['Arroz', 'Macarrao', 'Feijao', 'Oleo', 'Sal', 'A\u00E7ucar']
+    > &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Default'>;
+      Schema.Attribute.DefaultTo<'Arroz'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    donations: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
     expiration_date: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -469,6 +467,10 @@ export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -500,6 +502,10 @@ export interface ApiOngOng extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -966,7 +972,10 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    donors: Schema.Attribute.Relation<'oneToMany', 'api::donation.donation'>;
+    documento: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    donations: Schema.Attribute.Relation<'oneToMany', 'api::donation.donation'>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
