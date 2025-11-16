@@ -75,7 +75,13 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::donation.donation",
-      "mappedBy": "user"
+      "mappedBy": "donor"
+    },
+    "donations_received": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::donation.donation",
+      "mappedBy": "ong_recipient"
     }
   }
 }

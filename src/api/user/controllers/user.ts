@@ -12,9 +12,42 @@ export const userControllers = {
       documentId: ctx.state.user.documentId,
       populate: {
         role: true,
+        donations: {
+          populate: {
+            item_doado: {
+              populate: {
+                tipo_alimento: true,
+              },
+            },
+            ong_recipient: true,
+          },
+        },
+        donations_received: {
+          populate: {
+            item_doado : {
+              populate: {
+                tipo_alimento: true,
+              },
+            },
+            donor: true,
+          },
+        },
+
         },
     })
   },
+
+  async getAllOngs(ctx){
+    const ongs = await strapi.documents('plugin::users-permissions.user').findMany({
+      filters: {
+        role: {
+          name: 'ong',
+        },
+      },
+    });
+    return ctx.body = ongs;
+  },
+
   async updateRole(ctx){
     const { roleParams } = ctx.params;
     const roles = await strapi.documents('plugin::users-permissions.role').findMany({

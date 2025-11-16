@@ -11,29 +11,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Alimentos": {
-      "type": "enumeration",
-      "required": true,
-      "default": "Arroz",
-      "enum": [
-        "Arroz",
-        "Macarrao",
-        "Feijao",
-        "Oleo",
-        "Sal",
-        "Açucar"
-      ]
-    },
-    "quantity": {
-      "type": "string",
-      "required": true
-    },
-    "expiration_date": {
-      "type": "date"
-    },
     "status_donation": {
       "type": "enumeration",
-      "required": true,
+      "required": false,
       "default": "Pendente",
       "enum": [
         "Pendente",
@@ -41,17 +21,22 @@
         "Entregue"
       ]
     },
-    "user": {
+    "donor": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "donations"
     },
-    "ong": {
+    "item_doado": {
+      "type": "component",
+      "component": "doacoes.item-doado",
+      "repeatable": true
+    },
+    "ong_recipient": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::ong.ong",
-      "inversedBy": "donations"
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "donations_received"
     }
   }
 }

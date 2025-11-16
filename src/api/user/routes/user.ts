@@ -8,6 +8,16 @@ export default {
         policies: [],
         middlewares: [],
       },
+     },     
+     
+     {
+      method: 'GET',
+      path: '/user/ong/all',
+      handler: 'user.getAllOngs',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
      },
   ],
 };

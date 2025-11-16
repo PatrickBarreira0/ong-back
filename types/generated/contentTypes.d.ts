@@ -441,71 +441,65 @@ export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Alimentos: Schema.Attribute.Enumeration<
-      ['Arroz', 'Macarrao', 'Feijao', 'Oleo', 'Sal', 'A\u00E7ucar']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Arroz'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    expiration_date: Schema.Attribute.Date;
+    donor: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    item_doado: Schema.Attribute.Component<'doacoes.item-doado', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::donation.donation'
     > &
       Schema.Attribute.Private;
-    ong: Schema.Attribute.Relation<'manyToOne', 'api::ong.ong'>;
+    ong_recipient: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.String & Schema.Attribute.Required;
     status_donation: Schema.Attribute.Enumeration<
       ['Pendente', 'Enviada', 'Entregue']
     > &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Pendente'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
-export interface ApiOngOng extends Struct.CollectionTypeSchema {
-  collectionName: 'ongs';
+export interface ApiTipoAlimentoTipoAlimento
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'tipo_alimentos';
   info: {
-    displayName: 'ong';
-    pluralName: 'ongs';
-    singularName: 'ong';
+    displayName: 'TipoAlimento';
+    pluralName: 'tipo-alimentos';
+    singularName: 'tipo-alimento';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    address: Schema.Attribute.Text;
-    cnpj: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    contact_info: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    donations: Schema.Attribute.Relation<'oneToMany', 'api::donation.donation'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ong.ong'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tipo-alimento.tipo-alimento'
+    > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    Nome: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
+    UnidadeMedida: Schema.Attribute.Enumeration<['kg', 'Litro', 'Unidade']> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -976,6 +970,10 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     donations: Schema.Attribute.Relation<'oneToMany', 'api::donation.donation'>;
+    donations_received: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation.donation'
+    >;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1023,7 +1021,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::donation.donation': ApiDonationDonation;
-      'api::ong.ong': ApiOngOng;
+      'api::tipo-alimento.tipo-alimento': ApiTipoAlimentoTipoAlimento;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

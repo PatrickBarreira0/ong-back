@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_doacoes_item_doados",
+  "info": {
+    "displayName": "ItemDoado"
+  },
+  "options": {},
+  "attributes": {
+    "tipo_alimento": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tipo-alimento.tipo-alimento"
+    },
+    "quantidade": {
+      "type": "integer",
+      "required": true
+    }
+  },
+  "config": {}
+}
